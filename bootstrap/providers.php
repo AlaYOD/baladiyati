@@ -5,6 +5,7 @@ return [
     App\Providers\Filament\AdminPanelProvider::class,
     App\Providers\Filament\MunicipalPanelProvider::class,
     App\Providers\FortifyServiceProvider::class,
+    BladeUI\Heroicons\BladeHeroiconsServiceProvider::class,
     BladeUI\Icons\BladeIconsServiceProvider::class,
     Filament\Actions\ActionsServiceProvider::class,
     Filament\FilamentServiceProvider::class,
@@ -18,6 +19,10 @@ return [
     Filament\Widgets\WidgetsServiceProvider::class,
     Flux\FluxServiceProvider::class,
     Laravel\Fortify\FortifyServiceProvider::class,
+    Laravel\Tinker\TinkerServiceProvider::class,
     Livewire\LivewireServiceProvider::class,
     Spatie\Multitenancy\MultitenancyServiceProvider::class,
+    Spatie\Permission\PermissionServiceProvider::class,
+    BezhanSalleh\FilamentPluginEssentials\PluginEssentialsServiceProvider::class,
+    BezhanSalleh\FilamentShield\FilamentShieldServiceProvider::class,
 ];

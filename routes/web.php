@@ -28,5 +28,18 @@ Route::middleware([
         Route::view('dashboard', 'dashboard')->name('dashboard');
     });
 
+    // Custom Scale Receipt Print Route
+    Route::get('/app/scale-operations/{record}/print', function ($record) {
+        $operation = \App\Models\ScaleOperation::findOrFail($record);
+        return view('municipal.scale-operations.receipt', compact('operation'));
+    })->name('filament.municipal.resources.scale-operations.print')->middleware(['auth']);
+
+    // Custom Payslip Print Route
+    Route::get('/app/payroll-records/{record}/payslip', function ($record) {
+        $payroll = \App\Models\PayrollRecord::with('user')->findOrFail($record);
+        return view('municipal.hr.payslip', compact('payroll'));
+    })->name('filament.municipal.resources.payroll-records.payslip')->middleware(['auth']);
+
+
     require __DIR__.'/settings.php';
 });

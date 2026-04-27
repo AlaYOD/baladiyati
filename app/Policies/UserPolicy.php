@@ -2,52 +2,71 @@
 
 namespace App\Policies;
 
-use App\Models\User;
+use Illuminate\Foundation\Auth\User as AuthUser;
+use Illuminate\Auth\Access\HandlesAuthorization;
 
-/**
- * Authorization policy for tenant User management.
- * Runs exclusively in the municipal panel context — the Gate::before()
- * in AppServiceProvider grants all permissions to 'super-admin' first.
- */
 class UserPolicy
 {
-    /** Any authenticated tenant user may see the user list. */
-    public function viewAny(User $user): bool
+    use HandlesAuthorization;
+    
+    public function viewAny(AuthUser $authUser): bool
     {
-        return true;
+        return $authUser->can('ViewAny:User');
     }
 
-    /** Any authenticated tenant user may view another user's profile. */
-    public function view(User $user, User $model): bool
+    public function view(AuthUser $authUser): bool
     {
-        return true;
+        return $authUser->can('View:User');
     }
 
-    /** Only managers and super-admins may create new users. */
-    public function create(User $user): bool
+    public function create(AuthUser $authUser): bool
     {
-        return $user->hasAnyRole(['super-admin', 'manager']);
+        return $authUser->can('Create:User');
     }
 
-    /** Only managers and super-admins may update users. */
-    public function update(User $user, User $model): bool
+    public function update(AuthUser $authUser): bool
     {
-        return $user->hasAnyRole(['super-admin', 'manager']);
+        return $authUser->can('Update:User');
     }
 
-    /** Only super-admins may delete users. */
-    public function delete(User $user, User $model): bool
+    public function delete(AuthUser $authUser): bool
     {
-        return $user->hasRole('super-admin');
+        return $authUser->can('Delete:User');
     }
 
-    public function restore(User $user, User $model): bool
+    public function deleteAny(AuthUser $authUser): bool
     {
-        return $user->hasRole('super-admin');
+        return $authUser->can('DeleteAny:User');
     }
 
-    public function forceDelete(User $user, User $model): bool
+    public function restore(AuthUser $authUser): bool
     {
-        return $user->hasRole('super-admin');
+        return $authUser->can('Restore:User');
     }
+
+    public function forceDelete(AuthUser $authUser): bool
+    {
+        return $authUser->can('ForceDelete:User');
+    }
+
+    public function forceDeleteAny(AuthUser $authUser): bool
+    {
+        return $authUser->can('ForceDeleteAny:User');
+    }
+
+    public function restoreAny(AuthUser $authUser): bool
+    {
+        return $authUser->can('RestoreAny:User');
+    }
+
+    public function replicate(AuthUser $authUser): bool
+    {
+        return $authUser->can('Replicate:User');
+    }
+
+    public function reorder(AuthUser $authUser): bool
+    {
+        return $authUser->can('Reorder:User');
+    }
+
 }
